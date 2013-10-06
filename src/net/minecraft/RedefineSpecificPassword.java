@@ -122,7 +122,12 @@ public class RedefineSpecificPassword extends JDialog {
 						}
 						else if (pass1.equals(pass2)) {
 							if (MySQL.checkIfUserExistsInDb(loginField.getText()) == false)
+							{
+								lblInfo.setForeground(Color.RED);
+								lblInfo.setText("Le login entré n'existe pas dans la base.");
+								pack();
 								return;
+							}
 							MySQL.changePassword(userLogin, Util.md5(pass1));
 							lblInfo.setForeground(Color.GREEN);
 							loginPanel.forceRedefinePassword = false;
