@@ -142,21 +142,21 @@ public class loginPanel extends JPanel {
 		    add(new TransparentPanel());
 		    add(new TransparentPanel());
 		/* Admin mode */
-		}else {
+		} else {
 			rank = MySQL.getUserRank(launcherFrame.loginForm.mainLoginPanel.getAdmLogin());
 			forceRedefinePassword = admResult.equals("defpass");
 			errorLabel.setForeground(Color.RED);
 		    this.errorLabel.setText("");
 		    add(this.errorLabel);
 		    add(AdmLoginButton(launcherFrame));
-		    if (rank.equals("DevTeam")){
+		    if (rank.equals("Dev")){
 		    	add(AdmFreeDatabaseButton());
 		    	add(AdmChangeUserPassword());
 		    }
 		    add(AdmChangePasswordButton());
 		    
-		    if (!rank.equals("DevTeam")){
-		    	add(new TransparentPanel());
+		    if (!rank.equals("Dev")){
+		    	add(AdmChangeUserComPassword());
 		    	add(new TransparentPanel());
 		    }
 		    add(new TransparentPanel());
@@ -169,7 +169,6 @@ public class loginPanel extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				refresh_waitList();
 			}
-
 			@Override
 			public void mouseEntered(MouseEvent e){
 				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -198,13 +197,26 @@ public class loginPanel extends JPanel {
 		changeUserPassButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JDialog redef = new RedefineSpecificPassword(launcherFrame);
+				JDialog redef = new RedefineSpecificPassword(MySQL.getUserRank(launcherFrame.loginForm.mainLoginPanel.getAdmLogin()), launcherFrame);
 				redef.setVisible(true);
 				redef.pack();
-				//Code here
 			}
 		});
 		return changeUserPassButton;
+	}
+	
+	private JButton AdmChangeUserComPassword() {
+		final JButton changeUserComPassButton = new JButton("Change Com user password");
+		changeUserComPassButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		changeUserComPassButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog redef = new RedefineSpecificPassword(MySQL.getUserRank(launcherFrame.loginForm.mainLoginPanel.getAdmLogin()), launcherFrame);
+				redef.setVisible(true);
+				redef.pack();
+			}
+		});
+		return changeUserComPassButton;
 	}
 	
 	/**

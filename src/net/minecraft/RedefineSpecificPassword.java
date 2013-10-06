@@ -34,7 +34,7 @@ public class RedefineSpecificPassword extends JDialog {
 	 * Create the dialog.
 	 * @param launcherFrame 
 	 */
-	public RedefineSpecificPassword(final LauncherFrame launcherFrame) {
+	public RedefineSpecificPassword(final String rank, final LauncherFrame launcherFrame) {
 		setAlwaysOnTop(true);
 		setBounds(100, 100, 373, 149);
 		setLayout(new BorderLayout());
@@ -100,6 +100,7 @@ public class RedefineSpecificPassword extends JDialog {
 			lblInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
 			contentPanel.add(lblInfo);
 		}
+		// Gestion passwords
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -132,6 +133,14 @@ public class RedefineSpecificPassword extends JDialog {
 							{
 								lblInfo.setForeground(Color.RED);
 								lblInfo.setText("Le login entré n'existe pas dans la base.");
+								pack();
+								return;
+							}
+							System.err.println(rank + " | " + MySQL.getUserRank("userLogin") + " | " + userLogin);
+							if (rank.equals("Adm") && MySQL.getUserRank("userLogin").equals("Dev"))
+							{
+								lblInfo.setForeground(Color.RED);
+								lblInfo.setText("Vous n'avez pas le droit de changer le mot de passe d'un Dev.");
 								pack();
 								return;
 							}
