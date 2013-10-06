@@ -6,8 +6,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.security.AccessController;
 import java.security.PrivilegedExceptionAction;
-import java.sql.Timestamp;
-
 import net.minecraft.Unzip;
 import net.minecraft.Util;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
