@@ -120,18 +120,18 @@ public class RedefineSpecificPassword extends JDialog {
 							pack();
 							return;
 						}
+						else if (pass1.isEmpty() || pass2.isEmpty())
+						{
+							lblInfo.setForeground(Color.RED);
+							lblInfo.setText("Vous devez remplir tout les champs.");
+							pack();
+							return;
+						}
 						else if (pass1.equals(pass2)) {
 							if (MySQL.checkIfUserExistsInDb(loginField.getText()) == false)
 							{
 								lblInfo.setForeground(Color.RED);
 								lblInfo.setText("Le login entré n'existe pas dans la base.");
-								pack();
-								return;
-							}
-							else if (pass1.isEmpty() || pass2.isEmpty())
-							{
-								lblInfo.setForeground(Color.RED);
-								lblInfo.setText("Vous devez remplir tout les champs.");
 								pack();
 								return;
 							}
