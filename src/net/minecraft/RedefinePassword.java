@@ -105,6 +105,7 @@ public class RedefinePassword extends JDialog {
 							lblInfo.setForeground(Color.GREEN);
 							loginPanel.forceRedefinePassword = false;
 							lblInfo.setText("Mot de passe changé avec succès.");
+							pack();
 							new Thread() {
 								public void run() {
 									try {
@@ -118,7 +119,7 @@ public class RedefinePassword extends JDialog {
 									}
 								}
 							}.start();
-						}else {
+						} else {
 							JOptionPane.showMessageDialog(null, "Les mots de passe ne sont pas les mêmes !","Erreur", JOptionPane.ERROR_MESSAGE);
 						}
 					}

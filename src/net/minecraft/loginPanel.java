@@ -21,6 +21,7 @@ import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -148,13 +149,16 @@ public class loginPanel extends JPanel {
 		    this.errorLabel.setText("");
 		    add(this.errorLabel);
 		    add(AdmLoginButton(launcherFrame));
-		    if (rank.equals("DevTeam"))
+		    if (rank.equals("DevTeam")){
 		    	add(AdmFreeDatabaseButton());
+		    	add(AdmChangeUserPassword());
+		    }
 		    add(AdmChangePasswordButton());
 		    
-		    if (!rank.equals("DevTeam"))
+		    if (!rank.equals("DevTeam")){
 		    	add(new TransparentPanel());
-		    add(new TransparentPanel());
+		    	add(new TransparentPanel());
+		    }
 		    add(new TransparentPanel());
 		}
 		
@@ -187,6 +191,22 @@ public class loginPanel extends JPanel {
 	    add(refresh);
 	}
 
+	
+	private JButton AdmChangeUserPassword() {
+		final JButton changeUserPassButton = new JButton("Change user password");
+		changeUserPassButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		changeUserPassButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog redef = new RedefineSpecificPassword(launcherFrame);
+				redef.setVisible(true);
+				redef.pack();
+				//Code here
+			}
+		});
+		return changeUserPassButton;
+	}
+	
 	/**
 	 * Create and return JButton to clear database with actionListener implemented.
 	 * JButton is disabled after click and success.
@@ -220,9 +240,9 @@ public class loginPanel extends JPanel {
 		passwordButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*JDialog redefinePassword = new RedefinePassword(admLogin, launcherFrame);
+				JDialog redefinePassword = new RedefinePassword(admLogin, launcherFrame);
 				redefinePassword.setVisible(true);
-				redefinePassword.pack();*/
+				redefinePassword.pack();
 			}
 		});
 		return passwordButton;

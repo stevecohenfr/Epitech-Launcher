@@ -97,6 +97,21 @@ public class MySQL {
 		return "ko";
 	}
    
+   public static boolean checkIfUserExistsInDb(String login) {
+		try {
+			Statement stm = connexion.createStatement();
+			ResultSet res = stm.executeQuery("SELECT `Login` FROM `vose_adm` WHERE `Login` = '" + login + "'");
+			if (res.next()) {
+				if (login.equals(res.getString("Login")))
+					return true;
+			}
+		} catch(Exception e) {
+			System.err.println("Connexion à la base de donnée impossible.");
+		}
+		System.err.println("Login doesn't exist in DB.");
+		return false;
+	}
+   
    public static String getUserRank(String username) {
 	   try {
 		   Statement stm = connexion.createStatement();
