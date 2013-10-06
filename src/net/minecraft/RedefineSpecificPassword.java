@@ -120,11 +120,18 @@ public class RedefineSpecificPassword extends JDialog {
 							pack();
 							return;
 						}
-						else if (!pass1.isEmpty() && pass1.equals(pass2)) {
+						else if (pass1.equals(pass2)) {
 							if (MySQL.checkIfUserExistsInDb(loginField.getText()) == false)
 							{
 								lblInfo.setForeground(Color.RED);
 								lblInfo.setText("Le login entré n'existe pas dans la base.");
+								pack();
+								return;
+							}
+							else if (pass1.isEmpty() || pass2.isEmpty())
+							{
+								lblInfo.setForeground(Color.RED);
+								lblInfo.setText("Vous devez remplir tout les champs.");
 								pack();
 								return;
 							}
@@ -146,8 +153,10 @@ public class RedefineSpecificPassword extends JDialog {
 									}
 								}
 							}.start();
-						}else {
-							JOptionPane.showMessageDialog(null, "Les mots de passe ne sont pas les mêmes !","Erreur", JOptionPane.ERROR_MESSAGE);
+						} else {
+							lblInfo.setForeground(Color.RED);
+							lblInfo.setText("Les mots de passe ne sont pas les mêmes.");
+							pack();
 						}
 					}
 				});

@@ -100,7 +100,14 @@ public class RedefinePassword extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						String pass1 = new String(passwordField.getPassword());
 						String pass2 = new String(passwordField_1.getPassword());
-						if (!pass1.isEmpty() && pass1.equals(pass2)) {
+						if (pass1.equals(pass2)) {
+							if (pass1.isEmpty() || pass2.isEmpty())
+							{
+								lblInfo.setForeground(Color.RED);
+								lblInfo.setText("Vous devez remplir tout les champs.");
+								pack();
+								return;
+							}
 							MySQL.changePassword(login, Util.md5(pass1));
 							lblInfo.setForeground(Color.GREEN);
 							loginPanel.forceRedefinePassword = false;
@@ -120,7 +127,9 @@ public class RedefinePassword extends JDialog {
 								}
 							}.start();
 						} else {
-							JOptionPane.showMessageDialog(null, "Les mots de passe ne sont pas les mêmes !","Erreur", JOptionPane.ERROR_MESSAGE);
+							lblInfo.setForeground(Color.RED);
+							lblInfo.setText("Les mots de passe ne sont pas les mêmes.");
+							pack();
 						}
 					}
 				});
