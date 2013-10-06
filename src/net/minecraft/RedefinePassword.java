@@ -100,7 +100,7 @@ public class RedefinePassword extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						String pass1 = new String(passwordField.getPassword());
 						String pass2 = new String(passwordField_1.getPassword());
-						if (pass1.equals(pass2)) {
+						if (!pass1.isEmpty() && pass1.equals(pass2)) {
 							MySQL.changePassword(login, Util.md5(pass1));
 							lblInfo.setForeground(Color.GREEN);
 							loginPanel.forceRedefinePassword = false;

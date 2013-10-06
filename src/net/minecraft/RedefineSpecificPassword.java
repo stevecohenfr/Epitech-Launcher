@@ -120,7 +120,7 @@ public class RedefineSpecificPassword extends JDialog {
 							pack();
 							return;
 						}
-						else if (pass1.equals(pass2)) {
+						else if (!pass1.isEmpty() && pass1.equals(pass2)) {
 							if (MySQL.checkIfUserExistsInDb(loginField.getText()) == false)
 							{
 								lblInfo.setForeground(Color.RED);
