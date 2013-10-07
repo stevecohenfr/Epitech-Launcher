@@ -121,7 +121,6 @@ public class MySQL {
 		   Statement stm = connexion.createStatement();
 		   String SQL = "SELECT `Rank` FROM `vose_adm` WHERE `Login` = '" + username + "'";
 		   ResultSet res = stm.executeQuery(SQL);
-		   // ICI CHECKER LA FONCTION : NE FONCTIONNE PAS TOUT A FAIS COMME IL FAUT
 		   if (res.next())
 			   return (res.getString("Rank"));
 		   SQL = "SELECT pseudo FROM `vose_users` WHERE `pseudo` = '" + username + "'";
@@ -133,7 +132,6 @@ public class MySQL {
 	   }
 	   return "unknown";
    }
-   
    
    public static boolean checkUserId(String id) {
 	   /* Check if the id 'id' correspond to a user in DB */
