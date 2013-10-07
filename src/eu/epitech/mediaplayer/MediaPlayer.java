@@ -5,6 +5,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
+import javax.swing.JPanel;
+
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 
 /**
@@ -18,13 +20,14 @@ public class MediaPlayer extends IPlayer {
     private EmbeddedMediaPlayerComponent mediaPlayerComponent;
     private String mrl;
     private Frame topFrame;
+    private JPanel playPanel;
     
     //new MediaPlayer().start(mrl);
 
     /**
      * Create a new test.
      */
-    public MediaPlayer(String link, Frame topFrame) {
+    public MediaPlayer(String link, Frame topFrame, JPanel playPanel) {
     	try {
 			VlcLib.initVlcLib();
 			System.out.println("Libvlc initialized successfully!");
@@ -34,6 +37,7 @@ public class MediaPlayer extends IPlayer {
 			return ;
 		}
     	this.topFrame = topFrame;
+    	this.playPanel = playPanel;
     	this.mrl = link;
     	setLookAndFeel();
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
@@ -51,21 +55,23 @@ public class MediaPlayer extends IPlayer {
     }
 
     public void start() {
-        mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+    	if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+    		playPanel.setVisible(true);
+			mediaPlayerComponent.getMediaPlayer().pause();
+		}else {
+			playPanel.setVisible(false);
+			if (mediaPlayerComponent.getMediaPlayer().isPlayable())
+				mediaPlayerComponent.getMediaPlayer().start();
+			else
+				mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
+		}
     }
     
     private class MouseHandler extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent event) {
-            if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-				mediaPlayerComponent.getMediaPlayer().pause();
-			}else {
-				if (mediaPlayerComponent.getMediaPlayer().isPlayable())
-					mediaPlayerComponent.getMediaPlayer().start();
-				else
-					mediaPlayerComponent.getMediaPlayer().playMedia(mrl);
-			}
+            start();
         }
 
         @Override

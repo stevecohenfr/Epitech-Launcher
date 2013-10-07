@@ -148,18 +148,20 @@ public class loginPanel extends JPanel {
 			errorLabel.setForeground(Color.RED);
 		    this.errorLabel.setText("");
 		    add(this.errorLabel);
-		    add(AdmLoginButton(launcherFrame));
 		    if (rank.equals("Dev")){
+		    	add(AdmLoginButton(launcherFrame));
 		    	add(AdmFreeDatabaseButton());
+		    	add(AdmChangePasswordButton());
 		    	add(AdmChangeUserPassword());
+		    	add(AdmCreateUser(rank));
 		    }
-		    add(AdmChangePasswordButton());
-		    
-		    if (!rank.equals("Dev")){
+		    if (rank.equals("Adm")){
+		    	add(AdmLoginButton(launcherFrame));
+		    	add(AdmChangePasswordButton());
 		    	add(AdmChangeUserComPassword());
+		    	add(AdmCreateUser(rank));
 		    	add(new TransparentPanel());
 		    }
-		    add(new TransparentPanel());
 		}
 		
 	    refresh.setIcon(new ImageIcon(Launcher.class.getResource("refresh.png")));
@@ -190,6 +192,19 @@ public class loginPanel extends JPanel {
 	    add(refresh);
 	}
 
+	
+	private JButton AdmCreateUser(final String userRank) {
+		final JButton createButton = new JButton("Manage users");
+		createButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		createButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog dialog = new CreateNewUser(userRank);
+				dialog.setVisible(true);
+			}
+		});
+		return createButton;
+	}
 	
 	private JButton AdmChangeUserPassword() {
 		final JButton changeUserPassButton = new JButton("Change user password");

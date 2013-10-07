@@ -9,14 +9,20 @@ import java.awt.Insets;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Collections;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -46,6 +52,8 @@ public class MainLoginPanel extends JPanel {
 	private final String video2path = Util.URL_DL + "VOSE/video2.mp4";
 	public MediaPlayer mediaPlayer1;
 	public MediaPlayer mediaPlayer2;
+	public JPanel play1 = new TransparentPanel();
+	public JPanel play2 = new TransparentPanel();
 
 	public void showOrHideFooter() {
 		if (Footer.isVisible())
@@ -60,8 +68,8 @@ public class MainLoginPanel extends JPanel {
 	@SuppressWarnings("unchecked")
 	public MainLoginPanel(final LauncherFrame launcherFrame) {
 		
-		mediaPlayer1 = new MediaPlayer(video1path, launcherFrame);
-		mediaPlayer2 = new MediaPlayer(video2path, launcherFrame);
+		mediaPlayer1 = new MediaPlayer(video1path, launcherFrame, play1);
+		mediaPlayer2 = new MediaPlayer(video2path, launcherFrame, play2);
 		setLayout(new BorderLayout(10, 0));
 		setOpaque(false);
 
@@ -76,27 +84,106 @@ public class MainLoginPanel extends JPanel {
 		JPanel Videos = new TransparentPanel();
 		Videos.setBorder(new EmptyBorder(0, 0, 0, 10));
 		add(Videos, BorderLayout.CENTER);
-		Videos.setLayout(new BoxLayout(Videos, BoxLayout.Y_AXIS)); 
-
-		JPanel Video1 = new RoundedPanel();
+		Videos.setLayout(new BoxLayout(Videos, BoxLayout.Y_AXIS));
+		
+		final JLabel Iconlbl = new TransparentLabel("");
+		final ImageIcon playIcon = new ImageIcon(Launcher.class.getResource("play.png"));
+		final JPanel Video1 = new RoundedPanel();
 		Video1.setLayout(new BorderLayout());
+		JLayeredPane lp = new JLayeredPane();
 		Video1.setBorder(new EmptyBorder(3, 3, 3, 3));
 		Video1.setPreferredSize(new Dimension(10, 78));
 		Video1.setMinimumSize(new Dimension(10, 78));
 		Video1.setBackground(new Color(0, 0, 0));
-		Video1.add(mediaPlayer1.getComponent(), BorderLayout.CENTER);
+		lp.setOpaque(false);
+		mediaPlayer1.getComponent().setSize(new Dimension(450, 250));
+		Video1.addComponentListener(new ComponentListener() {
+			@Override
+			public void componentShown(ComponentEvent e) {}
+			@Override
+			public void componentResized(ComponentEvent e) {
+				play1.setSize(Video1.getSize());
+				mediaPlayer1.getComponent().setSize(Video1.getSize());
+				play1.setLocation((mediaPlayer1.getComponent().getWidth() / 2) - (play1.getWidth() / 2), (mediaPlayer1.getComponent().getHeight() / 2) - (2 * (play1.getHeight() / 3)));
+			}
+			@Override
+			public void componentMoved(ComponentEvent e) {}
+			@Override
+			public void componentHidden(ComponentEvent e) {}
+		});
+		Iconlbl.setIcon(playIcon);
+		play1.add(Iconlbl, BorderLayout.CENTER);
+		play1.setSize(new Dimension(450, 250));
+		play1.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				play1.setVisible(false);
+				mediaPlayer1.start();
+			}
+		});
+		lp.add(play1, Integer.valueOf(2));
+		lp.add(mediaPlayer1.getComponent(), Integer.valueOf(1));
+		Video1.add(lp, BorderLayout.CENTER);
 		Videos.add(Video1);
-
+		
 		Component rigidArea = Box.createRigidArea(new Dimension(0,5));
 		Videos.add(rigidArea);
 		
-		JPanel Video2 = new RoundedPanel();
+		final JLabel Iconlbl2 = new TransparentLabel("");
+		final ImageIcon playIcon2 = new ImageIcon(Launcher.class.getResource("play.png"));
+		final JPanel Video2 = new RoundedPanel();
 		Video2.setLayout(new BorderLayout());
+		JLayeredPane lp2 = new JLayeredPane();
 		Video2.setBorder(new EmptyBorder(3, 3, 3, 3));
 		Video2.setPreferredSize(new Dimension(10, 78));
 		Video2.setMinimumSize(new Dimension(10, 78));
 		Video2.setBackground(new Color(0, 0, 0));
-		Video2.add(mediaPlayer2.getComponent(), BorderLayout.CENTER);
+		lp2.setOpaque(false);
+		mediaPlayer2.getComponent().setSize(new Dimension(450, 250));
+		Video2.addComponentListener(new ComponentListener() {
+			@Override
+			public void componentShown(ComponentEvent e) {}
+			@Override
+			public void componentResized(ComponentEvent e) {
+				mediaPlayer2.getComponent().setSize(Video2.getSize());
+				play2.setSize(mediaPlayer2.getComponent().getSize());
+				play2.setLocation((mediaPlayer2.getComponent().getWidth() / 2) - (play2.getWidth() / 2), (mediaPlayer2.getComponent().getHeight() / 2) - (2 * (play2.getHeight() / 3)));
+			}
+			@Override
+			public void componentMoved(ComponentEvent e) {}
+			@Override
+			public void componentHidden(ComponentEvent e) {}
+		});
+		Iconlbl2.setIcon(playIcon2);
+		play2.add(Iconlbl2, BorderLayout.CENTER);
+		play2.setSize(new Dimension(450, 250));
+		play2.setOpaque(false);
+		play2.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				play2.setVisible(false);
+				mediaPlayer2.start();
+			}
+		});
+		lp2.add(play2, Integer.valueOf(2));
+		lp2.add(mediaPlayer2.getComponent(), Integer.valueOf(1));
+		Video2.add(lp2, BorderLayout.CENTER);
 		Videos.add(Video2);
 
 		Buttons = new RoundedPanel();

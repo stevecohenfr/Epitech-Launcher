@@ -179,4 +179,17 @@ public class MySQL {
 			e.printStackTrace();
 		}
    }
+   
+   public static boolean createUser(String username, String password, String rank) {
+	   /* Create new user */
+	   try {
+		   Statement stm = connexion.createStatement();
+		   String SQL = "INSERT INTO `VOSE`.`vose_adm` (`Login`, `Password`, `Rank`) VALUES ('" + username + "', '" + password + "', '" + rank + "');";
+		   stm.executeUpdate(SQL);
+		   return true;
+	   } catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+   }
 }
