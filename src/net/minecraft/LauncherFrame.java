@@ -249,10 +249,20 @@ public class LauncherFrame extends Frame
 			System.err.println("Please check your Internet connection");
 		    System.exit(-1);			
 		}
+		
+		System.err.println("TEST | " + MySQL.getUserRank("claoudj") + " | TEST");
+		System.err.println("TEST | " + MySQL.getUserRank("AdmTest") + " | TEST");
+		System.err.println("TEST | " + MySQL.getUserRank("ckcrim") + " | TEST");
+		System.err.println("TEST | " + MySQL.getUserRank("Durzo") + " | TEST");
+		System.err.println("TEST | " + MySQL.getUserRank("galasky") + " | TEST");
+		System.err.println("TEST | " + MySQL.getUserRank("Thomas") + " | TEST");
+		System.err.println("TEST | " + MySQL.getUserRank("ReaperSoon") + " | TEST");
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
 		catch (Exception localException) {
+			SplashScreen.hideIt();
 		}
 		final LauncherFrame launcherFrame = new LauncherFrame();
 		launcherFrame.setMinimumSize(new Dimension(1050, 600));
@@ -268,6 +278,7 @@ public class LauncherFrame extends Frame
 			@Override
 			public void windowClosing(WindowEvent e) {
 				MySQL.disconnect();
+				SplashScreen.hideIt();
 			}
 			
 			@Override

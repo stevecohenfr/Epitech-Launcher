@@ -69,6 +69,7 @@ public class MySQL {
 	}
    
    public static boolean freeUserList() {
+	   /* Set all inUse = 1 to 0 */
 		try {
 			Statement stm = connexion.createStatement();
 			String SQL = "UPDATE `vose_users` SET `inUse` = 0, `id` = 0 WHERE `vose_users`.`inUse` = 1";
@@ -81,6 +82,7 @@ public class MySQL {
 	}
    
    public static String checkUserInDb(String login, String password) {
+	   /* Check if login and password are correct according to the DB */
 		try {
 			Statement stm = connexion.createStatement();
 			ResultSet res = stm.executeQuery("SELECT `Password` FROM `vose_adm` WHERE `Login` = '" + login + "'");
@@ -98,6 +100,7 @@ public class MySQL {
 	}
    
    public static boolean checkIfUserExistsInDb(String login) {
+	   /* Check if the user named 'login' exists in DB */
 		try {
 			Statement stm = connexion.createStatement();
 			ResultSet res = stm.executeQuery("SELECT `Login` FROM `vose_adm` WHERE `Login` = '" + login + "'");
@@ -113,6 +116,7 @@ public class MySQL {
 	}
    
    public static String getUserRank(String username) {
+	   /* Get the user Rank value */
 	   try {
 		   Statement stm = connexion.createStatement();
 		   String SQL = "SELECT `Rank` FROM `vose_adm` WHERE `Login` = '" + username + "'";
@@ -132,6 +136,7 @@ public class MySQL {
    
    
    public static boolean checkUserId(String id) {
+	   /* Check if the id 'id' correspond to a user in DB */
 	   try {
 		   Statement stm = connexion.createStatement();
 		   String SQL = "SELECT `id` FROM `facebook_users` WHERE `id` = '" + id + "'";
@@ -146,17 +151,15 @@ public class MySQL {
    }
 
    public static boolean setUserCoords(String id, String user) {
+	   /* Set the id 'id' to a user in the guest base */
 	   try {
 		   Statement stm = connexion.createStatement();
 		   String SQL = "SELECT * FROM `facebook_users` WHERE `id` = '" + id + "'";
 		   ResultSet res = stm.executeQuery(SQL);
-		   System.out.println("MYSQL => SELECT * FROM `facebook_users` WHERE `id` = '" + id + "'");
 		   if (res.next() && res.getString("id").isEmpty() == false)
 		   {
-				Statement stm_up = connexion.createStatement();
-				String SQL_up = "UPDATE `vose_users` SET `id` = '" + res.getString("id") + "' WHERE `vose_users`.`pseudo` = '" + user + "'";
-				stm_up.executeUpdate(SQL_up);
-				System.out.println("MYSQL => UPDATE `vose_users` SET `id` = '" + res.getString("id") + "' WHERE `vose_users`.`pseudo` = '" + user + "'");
+				SQL = "UPDATE `vose_users` SET `id` = '" + res.getString("id") + "' WHERE `vose_users`.`pseudo` = '" + user + "'";
+				stm.executeUpdate(SQL);
 				return true;
 		   }
 	   } catch(Exception e) {
@@ -167,6 +170,7 @@ public class MySQL {
    }
    
    public static void changePassword(String username, String password) {
+	   /* Everything is in the function name */
 	   try {
 			Statement stm = connexion.createStatement();
 			String SQL = "UPDATE `vose_adm` SET `Password` = '" + password + "' WHERE `vose_adm`.`Login` = '" + username + "'";
