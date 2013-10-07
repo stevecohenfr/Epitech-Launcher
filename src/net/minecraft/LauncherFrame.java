@@ -250,14 +250,6 @@ public class LauncherFrame extends Frame
 		    System.exit(-1);			
 		}
 		
-		System.err.println("TEST | " + MySQL.getUserRank("claoudj") + " | TEST");
-		System.err.println("TEST | " + MySQL.getUserRank("AdmTest") + " | TEST");
-		System.err.println("TEST | " + MySQL.getUserRank("ckcrim") + " | TEST");
-		System.err.println("TEST | " + MySQL.getUserRank("Durzo") + " | TEST");
-		System.err.println("TEST | " + MySQL.getUserRank("galasky") + " | TEST");
-		System.err.println("TEST | " + MySQL.getUserRank("Thomas") + " | TEST");
-		System.err.println("TEST | " + MySQL.getUserRank("ReaperSoon") + " | TEST");
-		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
