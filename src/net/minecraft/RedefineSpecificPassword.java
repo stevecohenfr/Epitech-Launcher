@@ -136,8 +136,8 @@ public class RedefineSpecificPassword extends JDialog {
 								pack();
 								return;
 							}
-							System.err.println(rank + " | " + MySQL.getUserRank("userLogin") + " | " + userLogin);
-							if (rank.equals("Adm") && MySQL.getUserRank("userLogin").equals("Dev"))
+							System.err.println(rank + " | " + MySQL.getUserRank(userLogin) + " | " + userLogin);
+							if (rank.equals("Adm") && MySQL.getUserRank(userLogin).equals("Dev"))
 							{
 								lblInfo.setForeground(Color.RED);
 								lblInfo.setText("Vous n'avez pas le droit de changer le mot de passe d'un Dev.");
